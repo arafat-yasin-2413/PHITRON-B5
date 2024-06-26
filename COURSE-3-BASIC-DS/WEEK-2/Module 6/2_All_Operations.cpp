@@ -1,11 +1,13 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+
 class Node
 {
 public:
     int val;
     Node *next;
+
 
     Node(int val)
     {
@@ -13,6 +15,7 @@ public:
         this->next = NULL;
     }
 };
+
 
 void print_list(Node *head)
 {
@@ -24,9 +27,11 @@ void print_list(Node *head)
     }
 }
 
+
 void insert_at_tail(Node *&head, int v)
 {
     Node *newNode = new Node(v);
+
 
     if (head == NULL)
     {
@@ -34,6 +39,7 @@ void insert_at_tail(Node *&head, int v)
         cout << v << " inserted at head" << endl;
         return;
     }
+
 
     Node *temp = head;
     while (temp->next != NULL)
@@ -44,11 +50,12 @@ void insert_at_tail(Node *&head, int v)
     cout << v << " inserted at tail" << endl;
 }
 
+
 void insert_at_position(Node *head, int pos, int v)
 {
     Node *newNode = new Node(v);
     Node *temp = head;
-    for (int i = 1; i < pos - 1; i++)
+    for (int i = 1; i <= pos - 1; i++)
     {
         temp = temp->next;
         if (temp==NULL)
@@ -62,6 +69,7 @@ void insert_at_position(Node *head, int pos, int v)
     cout << "Inserted at Position " << pos << endl;
 }
 
+
 void insert_at_head(Node *&head, int v)
 {
     Node *newNode = new Node(v);
@@ -70,29 +78,34 @@ void insert_at_head(Node *&head, int v)
     cout << "Inserted At Head from specific function" << endl;
 }
 
-void delete_at_index(Node *head, int idx)
+
+void delete_from_position(Node *head, int pos)
 {
     Node *temp = head;
-    for (int i = 1; i <= idx - 1; i++)
+    for (int i = 1; i <= pos - 1; i++)
     {
+        // cout<<"khali obosthay for loop a dhuksi"<<endl;
         temp = temp->next;
         if(temp == NULL)
         {
-            cout<<"Invalid Index"<<endl;
-            return;
+            cout<<"Invalid Index when deleting inside while loop"<<endl;
+            return ;
         }
+       
     }
 
-    if(temp->next == NULL)
+
+    if (temp->next == NULL)
     {
-        cout<<"Invalid Index. temp->next = null found"<<endl;
+        cout<<"Invalid Index. Ther is only 1 node here. temp->next is null. temp->next = null->next can't possible"<<endl;
         return;
     }
     Node *deleteNode = temp->next;
     temp->next = deleteNode->next;
     delete deleteNode;
-    cout << "Deleted from idx " << idx << endl;
+    cout << "Deleted from pos " << pos << endl;
 }
+
 
 void delete_at_head(Node *&head)
 {
@@ -107,6 +120,7 @@ void delete_at_head(Node *&head)
     cout << "Deleted from Head" << endl;
 }
 
+
 void size_of_linked_list(Node *head)
 {
     int cnt = 0;
@@ -119,9 +133,11 @@ void size_of_linked_list(Node *head)
     cout<<"Size of Linked List = "<<cnt<<endl;
 }
 
+
 int main()
 {
     Node *head = NULL;
+
 
     while (true)
     {
@@ -130,7 +146,7 @@ int main()
         cout << "Option 2 : Insert at head" << endl; // done
         cout << "Option 3 : Insert at any position" << endl; // done
         cout << "Option 4 : Delete at head" << endl; // done
-        cout << "Option 5 : Delete at any Index" << endl;
+        cout << "Option 5 : Delete at any Position" << endl; // done
         cout << "Option 6 : Print the List" << endl;
         cout << "Option 7 : Size of Linked List" << endl;
         cout << "Option 8 : Terminate" << endl;
@@ -140,6 +156,7 @@ int main()
         cin >> op;
         cout << "----------------" << endl;
 
+
         if (op == 1)
         {
             cout << "Enter a value : ";
@@ -148,6 +165,7 @@ int main()
             insert_at_tail(head, val);
         }
 
+
         else if (op == 2)
         {
             cout << "Enter a value : ";
@@ -155,6 +173,7 @@ int main()
             cin >> val;
             insert_at_head(head, val);
         }
+
 
         else if (op == 3)
         {
@@ -166,7 +185,7 @@ int main()
             cout << "Enter value : ";
             int val;
             cin >> val;
-            if (pos == 1)
+            if (pos == 0)
             {
                 insert_at_head(head, val);
             }
@@ -176,24 +195,26 @@ int main()
             }
         }
 
+
         else if (op == 4)
         {
             delete_at_head(head);
         }
         else if (op == 5)
         {
-            cout << "Enter Index to Delete : ";
-            int idx;
-            cin >> idx;
-            if (idx == 0)
+            cout << "Enter position to Delete : ";
+            int pos;
+            cin >> pos;
+            if (pos == 0)
             {
                 delete_at_head(head);
             }
             else
             {
-                delete_at_index(head, idx);
+                delete_from_position(head, pos);
             }
         }
+
 
         else if (op == 6)
         {
@@ -202,6 +223,7 @@ int main()
             print_list(head);
             cout << endl;
         }
+
 
         else if(op == 7)
         {
@@ -212,6 +234,7 @@ int main()
             break;
         }
     }
+
 
     return 0;
 }
