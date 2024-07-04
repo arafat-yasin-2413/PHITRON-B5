@@ -88,19 +88,30 @@ void insert_at_position(Node *&head, Node *&tail, int pos, int val)
     }
 }
 
-void delete_at_head(Node *&head)
+void delete_at_head(Node *&head, Node *&tail)
 {
     Node *delNode = head;
     head = head->next;
+    if(head == NULL)
     delete delNode;
+    if(head == NULL)
+    {
+        tail = NULL;
+        return;
+    }
     head->prev = NULL;
 }
 
-void delete_at_tail(Node *&tail)
+void delete_at_tail(Node *&head,Node *&tail)
 {
     Node *delNode = tail;
     tail = tail->prev;
     delete delNode;
+    if(tail == NULL)
+    {
+        head = NULL;
+        return;
+    }
     tail->next = NULL;
 }
 
