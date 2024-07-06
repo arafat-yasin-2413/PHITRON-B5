@@ -82,10 +82,11 @@ void visit_webpage(Node *head, Node *&current, string st)
             // cout << "finally " << st << " paisi" << endl;
             // cout << "ekhon current = " << current->val << endl;
             cout<<temp->val<<endl;
+            current = temp;
             break;
         }
         temp = temp->next;
-        current = temp;
+        // current = temp;
     }
 
     // cout << "while loop seshe current = " << current->val << endl;
@@ -183,7 +184,3 @@ int main()
     return 0;
 }
 
-/*
-
-
-*/
