@@ -49,6 +49,10 @@ void visit_webpage(Node *head, Node *&current, string st) {
     }
 }
 
+// At last , এরর খুজে পেয়েছিলাম। আমার লজিকটাই কাজ করেছে। 
+// current টাকে লুপের মাধ্যমে সামনে নেওয়ার জন্য TC 3,7 এ এরর খাচ্ছিলাম।
+
+
 int main() {
     Node *head = NULL;
     Node *tail = NULL;
