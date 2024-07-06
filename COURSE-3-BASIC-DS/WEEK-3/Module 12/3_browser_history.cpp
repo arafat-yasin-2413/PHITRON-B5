@@ -53,6 +53,20 @@ int size_of_list(Node *head)
     return cnt;
 }
 
+bool search_webpage(Node *head, string v)
+{
+    Node *temp = head;
+    while(temp!=NULL)
+    {
+        if(temp->val == v)
+        {
+            return true;
+        }
+        temp = temp->next;
+    }
+    return false;
+}
+
 void visit_webpage(Node *head, Node *&current, string st)
 {
     // cout << "head er val = " << head->val << endl;
@@ -81,9 +95,9 @@ int main()
 {
     Node *head = NULL;
     Node *tail = NULL;
-    Node *current = NULL;
+    // Node *current = NULL;/
 
-    list<string> myList;
+    // list<string> myList;
 
     while (true)
     {
@@ -94,9 +108,9 @@ int main()
             break;
         }
         take_input(head, tail, val);
-        myList.push_back(val);
+        // myList.push_back(val);
     }
-    current = head;
+    Node *current = head;
     // print_list(head);
 
     // cout << "accessing current = " << current->val << endl;
@@ -114,17 +128,26 @@ int main()
             string st;
             cin >> st;
 
-            auto it = find(myList.begin(), myList.end(), st);
-            if (it != myList.end())
+            // auto it = find(myList.begin(), myList.end(), st);
+            // if (it != myList.end())
+            // {
+            //     // cout << "paisi" << endl;
+            //     visit_webpage(head, current, st);
+            //     // cout << "call korar por main func theke current er val = " << current->val << endl;
+            // }
+            // else
+            // {
+            //     cout<<"Not Available"<<endl;
+            //     // cout << "painai" << endl;
+            // }
+            bool res = search_webpage(head,st);
+            if(res)
             {
-                // cout << "paisi" << endl;
-                visit_webpage(head, current, st);
-                // cout << "call korar por main func theke current er val = " << current->val << endl;
+                visit_webpage(head,current,st);
             }
-            else
+            else if(res == 0)
             {
                 cout<<"Not Available"<<endl;
-                // cout << "painai" << endl;
             }
         }
 
@@ -159,3 +182,1017 @@ int main()
 
     return 0;
 }
+
+/*
+আপনি একটি ডাবলি লিঙ্কড লিস্ট নিয়ে নিতে পারেন যেটি প্রতিটি নোডে একটি স্ট্রিং স্টোর রাখে। তারপর আপনি ইনপুট নেওয়া শুরু করতে পারেন। যতক্ষণ না আমরা "end" পাচ্ছি ততক্ষণ আমরা ইনপুট নেব এবং ইনপুটটি আমাদের লিঙ্কড লিস্টে insert_at_tail ফাংশন ইউজ করে ইনসার্ট করতে থাকবো। ঠিক যেমন ইন্টিজার ভ্যালু ইনপুট নেওয়ার সময় আমরা -1 পেলে থেমে যেতাম আর না পেলে ইনসাইট এর টেল ফাংশন ইউজ করে ইনসার্ট করতে থাকতাম ঠিক তেমনি। 
+
+এরপর আপনি কুয়েরি নাম্বার ইনপুট নিয়ে নিতে পারেন। প্রতিটি কুয়েরিতে আপনি একটি করে কমান্ড ইনপুট নিবেন। সে কমান্ডটি যদি হয় “visit” তাহলে আপনি আরও একটি স্ট্রিং ইনপুট নিবেন যেখানে একটি সাইটের নাম থাকবে। তারপর আপনি আপনার লিঙ্কড লিস্টের মাঝে খুজে দেখবেন যে এই সাইটটি পান কিনা যদি পান তাহলে এই সাইটটি প্রিন্ট করে দিবেন এবং আপনার কারেন্ট নোডটিকে আপডেট করে দিতে পারেন (আমরা একটি কারেন্ট নোড রাখবো আমরা এখন কোন নোডে আছি সেটা ট্র্যাক রাখার জন্য)। আর না পাওয়া গেলে “Not Available” প্রিন্ট করে দিতে হবে। আর যদি কমান্ড হিসেবে “prev” আসে তাহলে আপনি কারেন্ট যেই সাইটে আছেন তার প্রিভিয়াস সাইট টায় যাবেন লিংকড লিস্ট অনুযায়ী। 
+আর যদি কমান্ড হিসেবে “next” আসে তাহলে আপনি কারেন্ট যেই সাইটে আছেন লিঙ্কড লিস্টে তার নেক্সট এর যে সাইটা আছে আপনি সেই সাইটে যাবেন। প্রিভিয়াস এবং নেক্সট এর ক্ষেত্রে যদি কোথাও যাওয়া না যায় তাহলে “Not Available” প্রিন্ট করবেন এবং আপনি যেখানে ছিলেন সেখানেই থাকবেন।
+
+এক্ষেত্রে লক্ষ্যনীয় বিষয় হচ্ছে আপনাকে যদি এমন একটি সাইট দেওয়া হয় যেটি লিংকড লিস্টে নেই। সেই সাইটটি খুঁজে না পাওয়া গেলে আপনাকে "Not Available" প্রিন্ট করতে হবে এবং আপনার কারেন্ট নোড যেখানে ছিল সেখানেই থাকবে।
+
+
+a b c d e f g h i j k l m n o p q r s t u v w x y z end
+1000
+visit s
+next
+visit p
+prev
+prev
+visit r
+visit n
+prev
+visit b
+next
+next
+visit a
+visit y
+prev
+next
+next
+visit i
+visit k
+prev
+visit q
+prev
+prev
+next
+prev
+visit s
+visit l
+next
+prev
+next
+prev
+prev
+prev
+visit p
+next
+next
+next
+prev
+next
+visit m
+visit c
+next
+next
+prev
+next
+visit u
+prev
+next
+next
+next
+visit v
+next
+next
+visit u
+visit m
+visit o
+prev
+next
+prev
+visit t
+prev
+visit f
+visit x
+next
+next
+prev
+next
+next
+visit m
+visit d
+visit l
+prev
+visit w
+next
+next
+prev
+prev
+visit e
+visit j
+next
+next
+next
+next
+visit t
+visit f
+prev
+visit f
+next
+next
+visit t
+next
+prev
+next
+next
+prev
+visit y
+next
+visit u
+prev
+prev
+prev
+visit b
+visit v
+visit r
+next
+visit r
+prev
+next
+prev
+prev
+visit v
+visit o
+next
+next
+visit e
+next
+next
+prev
+next
+visit j
+visit o
+next
+next
+next
+prev
+visit z
+next
+next
+next
+visit s
+next
+next
+next
+visit o
+prev
+visit a
+next
+prev
+prev
+prev
+visit o
+prev
+prev
+prev
+next
+next
+prev
+visit s
+next
+next
+visit t
+visit i
+next
+visit w
+next
+prev
+prev
+visit i
+prev
+visit d
+visit d
+visit z
+next
+visit m
+visit y
+next
+next
+visit m
+prev
+prev
+next
+next
+next
+prev
+prev
+visit e
+visit l
+visit u
+prev
+visit r
+prev
+next
+prev
+next
+prev
+next
+next
+visit p
+prev
+next
+prev
+next
+next
+prev
+visit j
+next
+visit e
+prev
+visit c
+prev
+next
+prev
+prev
+visit h
+prev
+next
+prev
+visit m
+visit l
+next
+prev
+visit w
+visit n
+next
+next
+visit u
+visit z
+next
+visit r
+visit x
+next
+prev
+prev
+prev
+visit a
+prev
+next
+visit t
+prev
+next
+prev
+next
+prev
+visit y
+visit i
+prev
+next
+next
+prev
+prev
+next
+visit c
+next
+next
+next
+prev
+next
+prev
+prev
+next
+visit t
+visit d
+visit a
+prev
+visit w
+next
+visit f
+prev
+next
+visit q
+next
+visit g
+visit h
+next
+visit p
+next
+prev
+next
+visit q
+next
+next
+next
+visit m
+next
+prev
+next
+prev
+visit n
+next
+prev
+visit w
+next
+visit o
+next
+visit b
+next
+prev
+next
+prev
+next
+prev
+visit d
+next
+visit t
+next
+prev
+next
+prev
+prev
+next
+prev
+next
+prev
+visit o
+visit c
+visit c
+visit y
+next
+visit z
+prev
+visit f
+visit b
+visit h
+visit k
+next
+visit r
+next
+prev
+next
+visit r
+visit g
+visit e
+prev
+visit m
+visit w
+next
+prev
+visit f
+visit r
+visit p
+next
+prev
+prev
+prev
+visit v
+next
+next
+visit b
+visit a
+visit x
+prev
+visit f
+visit y
+visit t
+visit h
+visit c
+visit i
+prev
+visit o
+prev
+visit n
+visit j
+next
+visit l
+next
+prev
+visit u
+next
+prev
+prev
+visit e
+visit z
+visit d
+visit s
+prev
+prev
+prev
+prev
+visit p
+next
+next
+next
+visit m
+prev
+visit a
+next
+next
+visit e
+prev
+prev
+prev
+visit t
+next
+next
+prev
+visit o
+visit m
+visit a
+prev
+next
+visit m
+prev
+prev
+visit v
+visit c
+visit z
+visit z
+next
+visit w
+next
+next
+next
+next
+visit n
+visit q
+visit y
+prev
+prev
+next
+visit n
+prev
+next
+next
+visit t
+next
+prev
+visit s
+next
+next
+visit n
+visit k
+visit m
+next
+prev
+visit u
+prev
+prev
+next
+next
+prev
+next
+visit s
+next
+prev
+next
+next
+next
+next
+next
+visit v
+visit l
+visit d
+next
+next
+next
+visit e
+next
+visit t
+visit g
+next
+prev
+prev
+visit o
+next
+visit d
+next
+prev
+next
+visit g
+next
+prev
+prev
+prev
+visit d
+prev
+prev
+next
+prev
+visit d
+next
+next
+next
+visit b
+next
+prev
+visit l
+next
+visit r
+prev
+visit c
+prev
+next
+prev
+visit o
+prev
+prev
+prev
+visit q
+next
+next
+next
+prev
+next
+prev
+prev
+next
+prev
+prev
+visit q
+next
+visit j
+next
+visit v
+next
+next
+prev
+visit c
+visit e
+next
+next
+prev
+next
+prev
+visit g
+prev
+prev
+visit s
+next
+prev
+visit a
+prev
+next
+next
+visit r
+visit x
+prev
+next
+prev
+prev
+visit z
+next
+visit e
+next
+visit n
+visit r
+next
+visit v
+prev
+visit j
+next
+next
+visit p
+visit p
+next
+prev
+next
+next
+visit m
+next
+prev
+prev
+next
+next
+next
+visit y
+visit c
+prev
+prev
+next
+next
+next
+prev
+next
+next
+next
+visit x
+next
+next
+next
+next
+visit z
+prev
+visit j
+next
+prev
+next
+prev
+next
+prev
+next
+next
+visit m
+prev
+next
+prev
+visit o
+prev
+next
+next
+prev
+prev
+prev
+next
+prev
+prev
+next
+next
+prev
+next
+prev
+prev
+prev
+next
+visit q
+prev
+prev
+next
+visit r
+prev
+visit h
+prev
+next
+next
+next
+visit d
+prev
+next
+prev
+visit v
+prev
+prev
+visit w
+prev
+prev
+prev
+prev
+prev
+visit q
+visit e
+next
+visit i
+prev
+next
+next
+next
+next
+next
+prev
+visit e
+prev
+next
+visit d
+visit w
+next
+visit c
+visit p
+visit b
+next
+next
+next
+prev
+next
+prev
+next
+next
+visit j
+visit z
+visit c
+visit s
+next
+prev
+prev
+next
+visit w
+visit e
+visit q
+next
+visit r
+next
+next
+next
+next
+visit p
+visit l
+visit i
+prev
+next
+prev
+visit n
+visit p
+prev
+visit r
+next
+visit j
+prev
+next
+next
+next
+prev
+prev
+next
+next
+visit m
+visit x
+next
+next
+prev
+prev
+prev
+visit l
+prev
+next
+prev
+visit u
+next
+visit y
+prev
+prev
+next
+prev
+prev
+visit j
+next
+prev
+prev
+next
+next
+visit g
+visit a
+next
+visit e
+prev
+next
+prev
+visit k
+visit s
+prev
+next
+next
+visit x
+visit y
+visit c
+prev
+prev
+next
+prev
+visit l
+visit u
+visit b
+visit t
+prev
+visit l
+prev
+next
+visit g
+next
+visit u
+next
+prev
+prev
+next
+next
+prev
+next
+next
+visit m
+next
+prev
+next
+prev
+next
+visit g
+prev
+next
+prev
+next
+visit p
+visit w
+next
+prev
+prev
+visit c
+next
+visit g
+visit r
+next
+visit f
+visit a
+next
+next
+next
+prev
+visit j
+next
+prev
+visit y
+prev
+next
+visit z
+prev
+visit x
+prev
+prev
+visit r
+prev
+prev
+visit u
+prev
+visit a
+next
+prev
+next
+next
+visit e
+next
+prev
+visit u
+next
+visit v
+prev
+visit p
+visit i
+next
+visit d
+visit b
+prev
+prev
+visit l
+prev
+next
+next
+next
+prev
+next
+next
+next
+visit k
+visit v
+visit t
+prev
+visit x
+next
+visit g
+visit g
+next
+next
+prev
+next
+prev
+visit b
+next
+next
+prev
+prev
+next
+prev
+prev
+next
+prev
+visit a
+prev
+visit x
+visit k
+prev
+next
+next
+prev
+visit j
+prev
+prev
+next
+prev
+prev
+visit t
+visit x
+next
+next
+next
+visit p
+next
+visit h
+visit m
+prev
+prev
+next
+visit k
+prev
+prev
+visit e
+prev
+visit x
+prev
+next
+visit l
+prev
+next
+prev
+prev
+prev
+visit j
+prev
+visit l
+next
+next
+visit k
+next
+next
+prev
+next
+visit z
+visit q
+visit k
+visit o
+next
+prev
+next
+prev
+visit l
+prev
+visit k
+prev
+visit g
+visit p
+prev
+visit h
+prev
+prev
+visit a
+prev
+visit z
+next
+visit s
+next
+visit r
+prev
+next
+next
+visit f
+visit x
+visit z
+prev
+next
+next
+next
+prev
+visit o
+visit p
+next
+visit z
+next
+next
+visit h
+prev
+prev
+next
+next
+visit q
+visit e
+next
+visit k
+prev
+next
+visit d
+visit t
+visit j
+prev
+next
+visit i
+visit i
+visit u
+next
+prev
+prev
+prev
+prev
+prev
+visit s
+visit f
+prev
+visit x
+prev
+next
+prev
+prev
+next
+prev
+visit d
+next
+visit y
+visit v
+visit t
+next
+prev
+next
+visit o
+visit x
+next
+visit i
+visit h
+next
+prev
+next
+visit s
+next
+next
+visit m
+visit u
+prev
+visit a
+next
+prev
+
+*/
