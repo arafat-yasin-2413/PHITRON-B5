@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-const int N = 100;
+const int N = 105;
 int dist[N];
 
 class Edge
@@ -21,26 +21,6 @@ public:
 
 int main()
 {
-
-    /*
-    4 4
-    1 2 3
-    0 3 10
-    2 3 4
-    0 1 2
-    */
-
-    /*
- 4 6
- 3 2 8
- 2 1 5
- 1 0 2
- 3 0 20
- 0 1 3
- 1 2 2
-    */
-
-   
     int n, e;
     cin >> n >> e;
 
@@ -60,8 +40,8 @@ int main()
     //     cout << el.u << " " << el.v << " " << el.w << endl;
     // }
 
-    dist[0] = 0;
-    for (int i = 1; i < n; i++)
+    dist[1] = 0;
+    for (int i = 1; i <= n; i++)
     {
         dist[i] = INT_MAX;
     }
