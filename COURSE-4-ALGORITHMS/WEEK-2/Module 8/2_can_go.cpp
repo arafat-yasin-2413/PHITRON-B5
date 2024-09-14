@@ -1,36 +1,35 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-const long long int INF = 1e18+9;
+// const int INF = INT_MAX;
 const int N = 1e3 + 5;
 vector<pair<int, int>> v[N];
-long long int dis[N];
+long long int dist[N];
 
-void dijkstra_optimized(int src)
+void dijkstra(int src)
 {
+    dist[src] = 0;
 
-    queue<pair<int,int>> q;
+    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
+    pq.push({dist[src], src});
 
-    q.push({0, src});
-    dis[src] = 0;
-
-    while (!q.empty())
+    while (!pq.empty())
     {
-        pair<int, int> parent = q.front();
-        q.pop();
+        pair<int, int> parent = pq.top();
+        pq.pop();
 
-        int node = parent.second;
-        int cost = parent.first;
+        // int parentCost = parent.first;
+        int parentNode = parent.second;
 
-        for (pair<int, int> child : v[node])
+        for (pair<int, int> child : v[parentNode])
         {
             int childNode = child.first;
             int childCost = child.second;
 
-            if (cost + childCost < dis[childNode])
+            if (dist[parentNode] + childCost < dist[childNode])
             {
-                dis[childNode] = cost + childCost;
-                q.push({dis[childNode],childNode});
+                dist[childNode] = dist[parentNode] + childCost;
+                pq.push({dist[childNode], childNode});
             }
         }
     }
@@ -44,36 +43,57 @@ int main()
 
     while (e--)
     {
-        int a, b, c;
-        cin >> a >> b >> c;
+        int a, b, w;
+        cin >> a >> b >> w;
 
-        v[a].push_back({b, c});
+        v[a].push_back({b, w});
     }
 
-    for (int i = 1; i < N; i++)
+    // for(int i=1; i<=n; i++)
+    // {
+    //     cout<<i<<": ";
+    //     for(auto el : v[i])
+    //     {
+    //         cout<<"("<< el.first<<", "<<el.second <<")"<<" ";
+    //     }
+    //     cout<<endl;
+    // }
+
+    for (int i = 1; i <= N; i++)
     {
-        dis[i] = INF;
+        dist[i] = INT_MAX;
     }
 
-    int src, q, d, dw;
+    // cout<<"before"<<endl;
+    // for (int i = 0; i <= n; i++)
+    // {
+    //     cout << i << ": " << dist[i] << endl;
+    // }
+
+
+    int src;
     cin >> src;
+    dijkstra(src);
 
-    dijkstra_optimized(src);
-
+    int q;
     cin >> q;
-    for (int i = 0; i < q; i++)
+
+    for (int i = 1; i <= q; i++)
     {
+        int d, dw;
         cin >> d >> dw;
-        if (dis[d] <= dw)
+
+        if (dist[d] <= dw)
             cout << "YES" << endl;
         else
             cout << "NO" << endl;
     }
 
-    // for (int i = 1; i < n; i++)
+    // cout<<"after"<<endl;
+    // for (int i = 0; i <= n; i++)
     // {
-    //     cout << i << " -> " << dis[i] << endl;
+    //     cout << i << ": " << dist[i] << endl;
     // }
-
+    
     return 0;
 }
