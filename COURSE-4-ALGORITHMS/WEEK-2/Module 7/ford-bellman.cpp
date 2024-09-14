@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-const int N = 105;
+const int N = 101;
 long long int dist[N];
 
 class Edge
@@ -55,7 +55,7 @@ int main()
             v = element.v;
             w = element.w;
 
-            if (dist[u] + w < dist[v])
+            if (dist[u] < INT_MAX and dist[u] + w < dist[v])
             {
                 dist[v] = dist[u] + w;
             }
