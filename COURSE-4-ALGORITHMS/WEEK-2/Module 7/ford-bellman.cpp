@@ -2,7 +2,7 @@
 using namespace std;
 
 const int N = 105;
-int dist[N];
+long long int dist[N];
 
 class Edge
 {
@@ -40,11 +40,11 @@ int main()
     //     cout << el.u << " " << el.v << " " << el.w << endl;
     // }
 
-    dist[1] = 0;
     for (int i = 1; i <= n; i++)
     {
         dist[i] = INT_MAX;
     }
+    dist[1] = 0;
 
     for (int k = 0; k < n - 1; k++)
     {
@@ -55,16 +55,21 @@ int main()
             v = element.v;
             w = element.w;
 
-            if (dist[u] < INT_MAX and dist[u] + w < dist[v])
+            if (dist[u] + w < dist[v])
             {
                 dist[v] = dist[u] + w;
             }
         }
     }
 
-    for (int i = 0; i < n; i++)
+    for (int i = 1; i <= n; i++)
     {
-        cout << dist[i] << " ";
+        if(dist[i] == INT_MAX)
+        {
+            cout<<"30000"<<" ";
+        }
+        else
+            cout << dist[i] << " ";
     }
     cout << endl;
 
