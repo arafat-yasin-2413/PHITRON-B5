@@ -3,6 +3,8 @@ using namespace std;
 
 int main()
 {
+    ios::sync_with_stdio(0);
+    cin.tie(NULL);
     int t;
     cin >> t;
     while (t--)
@@ -42,35 +44,9 @@ int main()
         }
 
         // cout << idx1 << " " << idx2 << endl;
-        int left = idx1, right = idx2;
-
-        if (n % 2 != 0)
-        {
-            if (idx1 > (n / 2))
-            {
-                // cout << "YES, 3 is greater than n/2" << endl;
-                right = idx1;
-            }
-            if (idx2 <= (n / 2))
-            {
-                left = idx2;
-            }
-        }
-
-        else if (n % 2 == 0)
-        {
-            if (idx1 > (n / 2))
-            {
-                right = idx1;
-            }
-
-            if (idx2 < (n / 2))
-            {
-                left = idx2;
-            }
-        }
-
-        cout << left << " " << right << endl;
+        if (idx1 > idx2)
+            swap(idx1, idx2);
+        cout << idx1 << " " << idx2 << endl;
     }
 
     return 0;
