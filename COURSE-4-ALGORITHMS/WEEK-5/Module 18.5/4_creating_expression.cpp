@@ -53,6 +53,9 @@ int main() {
 }
 
 */
+
+/*
+
 #include <bits/stdc++.h>
 using namespace std;
 #define ll long long int
@@ -118,4 +121,136 @@ int main()
     }
 
     return 0;
+}
+*/
+
+/*
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long int
+
+int main()
+{
+    int n;
+    ll W;
+
+    cin >> n >> W;
+
+    int ar[n];
+    int total = 0;
+    for (int i = 0; i < n; i++)
+    {
+        cin >> ar[i];
+        total += ar[i];
+    }
+
+    ll s1 = (W + total) / 2;
+
+    bool dp[n + 1][s1 + 1];
+
+    if ((W + total) % 2 == 1)
+    {
+        cout << "NO" << endl;
+    }
+
+    else
+    {
+        dp[0][0] = true;
+        for (int k = 1; k <= s1; k++)
+        {
+            dp[0][k] = false;
+        }
+
+        for (int i = 1; i <= n; i++)
+        {
+            for (int j = 0; j <= s1; j++)
+            {
+                if (ar[i - 1] <= j)
+                {
+                    bool op1 = dp[i - 1][j - ar[i - 1]];
+                    bool op2 = dp[i - 1][j];
+
+                    dp[i][j] = (op1 || op2);
+                }
+                else
+                {
+                    dp[i][j] = dp[i - 1][j];
+                }
+            }
+        }
+        if(dp[n][s1]) cout<<"YES"<<endl;
+        else cout<<"NO"<<endl;
+    }
+
+    // for (int i = 0; i <= n; i++)
+    // {
+    //     for (int j = 0; j <= s1; j++)
+    //     {
+    //         cout << dp[i][j] << " ";
+    //     }
+    //     cout << endl;
+    // }
+
+    return 0;
+}
+*/
+
+#include <bits/stdc++.h>
+using namespace std;
+// const int N = 21;
+// int a[N];
+
+// bool recur(int i, int n, int target, int sum)
+// {
+
+//     if (i == n)
+//     {
+//         if (sum == target)
+//             return true;
+//         else
+//             return false;
+//     }
+
+//     bool op1 = recur(i + 1, n, target, sum + a[i]);
+//     bool op2 = recur(i + 1, n, target, sum - a[i]);
+
+//     return op1 || op2;
+// }
+
+int n;
+int ar[21];
+int target;
+
+bool creating_expression(int i, int sum)
+{
+    if(i == n)
+    {
+        if(sum == target)
+            return true;
+        else 
+            return false;
+    }
+    bool op1 = creating_expression(i+1,sum + ar[i]);
+    bool op2 = creating_expression(i+1,sum - ar[i]);
+    return op1 || op2;
+}
+
+
+int main()
+{
+
+    int x;
+    cin >> n >> x;
+
+    target = x;
+
+    for (int i = 0; i < n; i++)
+    {
+        cin >> ar[i];
+    }
+
+    if (creating_expression(1,ar[0]))
+        cout << "YES" << endl;
+    else
+        cout << "NO" << endl;
 }
