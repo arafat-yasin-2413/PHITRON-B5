@@ -1,5 +1,44 @@
 #include <bits/stdc++.h>
 using namespace std;
+#define ll long long
+ll sum(ll i)
+{
+    ll x = i / 2;
+    ll sum = 0;
+
+    sum = x * (x + 1);
+
+    if (i % 2 != 0)
+    {
+        sum += (x + 1);
+    }
+
+    return sum;
+}
+int main()
+{
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    int n;
+    cin >> n;
+
+    int q;
+    cin >> q;
+
+    while (q--)
+    {
+        int l, r;
+        cin >> l >> r;
+
+        cout << sum(r) - sum(l - 1) << endl;
+    }
+
+    return 0;
+}
+
+/*
+#include <bits/stdc++.h>
+using namespace std;
 #define ll long long int
 
 int main()
@@ -36,12 +75,12 @@ int main()
         int L, R;
         cin >> L >> R;
 
-    
+
         if (L ==1)
         {
             cout << pref[R] << endl;
         }
-        
+
         else
         {
             cout << pref[R] - pref[L - 1] << endl;
@@ -51,6 +90,7 @@ int main()
     return 0;
 }
 
+*/
 /*
 
         if(L == R) cout<<ar[L]<<endl; // 1 1
