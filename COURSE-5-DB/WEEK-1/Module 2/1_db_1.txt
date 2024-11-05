@@ -1,0 +1,57 @@
+1. 
+CREATE database School;
+USE School;
+
+create table Student
+(Roll char(4),
+Name varchar(50),
+Marks double
+);
+
+DROP table Student;
+
+
+2.
+CREATE database School;
+USE School;
+
+CREATE table Student
+(Roll char(4) PRIMARY KEY,
+Name varchar(50),
+Marks double
+);
+
+DROP table Student;
+
+
+3. Insert
+INSERT INTO Student
+ (Roll,Name,Marks) VALUES(1,"Kawshik",90);
+
+
+
+4. Update
+SET SQL_SAFE_UPDATES = 0;
+
+UPDATE Student
+SET Name = "Kawshik Kumar Paul"
+WHERE Roll = 1;
+
+SET SQL_SAFE_UPDATES = 1;
+
+5. 
+SET SQL_SAFE_UPDATES = 0;
+DELETE FROM Student
+WHERE Roll =2;
+SET SQL_SAFE_UPDATES = 1;
+
+
+6. Deleting the whole data of the table. (Not the table)
+SET SQL_SAFE_UPDATES = 0;
+DELETE FROM Student
+SET SQL_SAFE_UPDATES = 1;
+
+
+7. Insert Multiple VALUES
+ INSERT INTO Student
+ (Roll, Name, Marks) VALUES(3,"Babul",78),(4,"Salman",85);
