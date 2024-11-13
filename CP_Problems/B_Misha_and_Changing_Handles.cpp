@@ -12,52 +12,40 @@ int main()
     int t;
     cin >> t;
 
-    vector<pair<string, string>> v;
+    map<string, string> mp;
 
-    map<string, int> mp;
     while (t--)
     {
-        string a, b;
-        cin >> a >> b;
+        string st1, st2;
+        cin >> st1 >> st2;
 
-        v.push_back({a, b});
-        mp[a]++;
-        mp[b]++;
-        // cout << a << " " << b << endl;
+        /*
+            this is my new keyboard. typing experience is quite better than
+            a4tech fg1010
+        */
+
+        bool flag = false;
+        for (auto it : mp)
+        {
+            if (it.second == st1)
+            {
+                flag = true;
+                mp[it.first] = st2;
+            }
+        }
+
+        if (flag == false)
+        {
+            mp[st1] = st2;
+        }
     }
 
-    int sz = v.size();
-    vector<pair<string, string>> res;
-    for (int i = 0; i < sz; i++)
-    {
-        cout<<mp[v[i].first]<<" "<<mp[v[i].second]<<endl;
-        if (mp[v[i].first] == 1 and mp[v[i].second] == 1)
-            res.push_back({v[i].first, v[i].second});
-    }
+    cout << mp.size() << endl;
 
-    // for (int i = 0; i < sz - 1; i++)
-    // {
-    //     for (int j = i + 1; j < sz; j++)
-    //     {
-
-    //         if (v[i].second == v[j].first)
-    //         {
-    //             if (mp[v[i].first] != mp[v[i].second])
-    //                 res.push_back({v[i].first, v[j].second});
-    //         }
-    //     }
-    // }
-
-    cout << res.size() << endl;
-    for (auto el : res)
+    for (auto el : mp)
     {
         cout << el.first << " " << el.second << endl;
     }
-
-    // for(auto el: mp)
-    // {
-    //     cout<<el.first<<" : "<<el.second<<endl;
-    // }
 
     return 0;
 }
