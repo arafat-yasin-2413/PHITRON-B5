@@ -1,0 +1,180 @@
+CREATE DATABASE SCHOOL
+;
+
+USE SCHOOL
+;
+
+
+CREATE TABLE STUDENT(
+	ID INT PRIMARY KEY,
+    NAME VARCHAR(100) NOT NULL,
+    CLASS VARCHAR(20) NOT NULL,
+    EMAIL VARCHAR(100) UNIQUE
+);
+
+CREATE TABLE COURSE(
+	COURSE_ID INT PRIMARY KEY,
+    COURSE_CODE VARCHAR(10) UNIQUE,
+    CREDIT INT NOT NULL
+    
+);
+
+
+CREATE TABLE ENROLL(
+	ENROLLMENT_ID INT PRIMARY KEY,
+    STUDENT_ID INT,
+    COURSE_ID INT,
+    
+    CONSTRAINT FK_ENROLL_STUDENT FOREIGN KEY (STUDENT_ID) 
+    REFERENCES STUDENT(ID) ON DELETE CASCADE,
+    CONSTRAINT FK_COURSES FOREIGN KEY (COURSE_ID) 
+    REFERENCES COURSE(COURSE_ID) ON DELETE SET NULL
+    
+);
+
+DROP TABLE ENROLL;
+
+
+-- 
+INSERT INTO STUDENT
+VALUES
+(1,'Asif','9','asif@gmail.com'),
+(2,'Bokul','9','bokul@gmail.com'),
+(3,'Chomok','9','chomok@gmail.com'),
+(4,'Dewan','9','dewan@gmail.com'),
+(5,'Sakib','9','sakib@gmail.com')
+
+;
+
+SELECT *
+FROM STUDENT
+;
+
+
+INSERT INTO COURSE
+VALUES
+(1,'CSE101',3),
+(2,'CSE104',2),
+(3,'CSE201',4),
+(4,'CSE210',3),
+(5,'CSE310',4)
+;
+
+SELECT *
+FROM COURSE
+;
+
+
+INSERT INTO ENROLL
+VALUES
+(1,2,5),
+(2,4,3),
+(3,5,2),
+(4,1,4),
+(5,3,1),
+(6,2,3)
+;
+
+
+SELECT *
+FROM ENROLL;
+
+
+DELETE FROM COURSE 
+WHERE COURSE_ID = 1
+;
+
+DELETE FROM STUDENT
+WHERE ID = 2
+;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
