@@ -1,0 +1,366 @@
+CREATE DATABASE UNIVERSITY
+;
+
+USE UNIVERSITY
+;
+
+CREATE TABLE Instructor (	
+    InstructorID INT AUTO_INCREMENT PRIMARY KEY,	
+    Name VARCHAR(255) NOT NULL,	
+    Email VARCHAR(255) NOT NULL UNIQUE,	
+    Phone VARCHAR(15),	
+    Department VARCHAR(50)	
+);	
+
+
+
+CREATE TABLE Course (	
+    CourseID INT AUTO_INCREMENT PRIMARY KEY,	
+    Title VARCHAR(255) NOT NULL,	
+    Credits INT NOT NULL,	
+    InstructorID INT,	
+    FOREIGN KEY (InstructorID) REFERENCES Instructor(InstructorID)	
+);	
+
+
+CREATE TABLE Enrollment (	
+    EnrollmentID INT AUTO_INCREMENT PRIMARY KEY,	
+    StudentID INT,	
+    CourseID INT,	
+    EnrollmentDate DATE NOT NULL,	
+    FOREIGN KEY (StudentID) REFERENCES Student(StudentID),	
+    FOREIGN KEY (CourseID) REFERENCES Course(CourseID)	
+);	
+
+CREATE TABLE Student (	
+    StudentID INT AUTO_INCREMENT PRIMARY KEY,	
+    Name VARCHAR(255) NOT NULL,	
+    Email VARCHAR(255) NOT NULL UNIQUE,	
+    Phone VARCHAR(15)	
+);
+
+
+INSERT INTO INSTRUCTOR (NAME,EMAIL,PHONE,DEPARTMENT)
+VALUES
+('Jahirul Islam','jahirul@gmail.com','87667766','CSE');
+
+INSERT INTO INSTRUCTOR (NAME,EMAIL,PHONE,DEPARTMENT)
+VALUES
+('Jahangir Alam','jahangir@gmail.com','87642366','CSE'),
+('Mohammad Ali','mohammad@gmail.com','97432366','CSE'),
+('Zia Hasan','ziahasangmail.com','886542366','CSE'),
+('Hasanul Haque','hasanul@gmail.com','34234366','CSE')
+;
+
+
+;
+SELECT *
+FROM INSTRUCTOR;
+
+
+INSERT INTO COURSE(TITLE,CREDITS,INSTRUCTORID)
+VALUES
+('CSE101',3,4),
+('CSE104',1,1),
+('CSE208',3,2),
+('CSE310',4,5),
+('CSE312',2,3)
+;
+
+
+SELECT *
+FROM COURSE
+;
+
+
+INSERT INTO STUDENT(NAME,EMAIL,PHONE)
+VALUES
+('Ahsan','ahsan@gmail.com','745764566'),
+('Bikash','bikash@gmail.com','85782348'),
+('Sourav','sourav@gmail.com','74774758'),
+('Hridoy','hridoy@gmail.com','445665787'),
+('Mehedi','mehedi@gmail.com','879666557'),
+('Sajedul','sajedul@gmail.com','8888555538'),
+('Anik','anik@gmail.com','876554445'),
+('Shiblu','shiblu@gmail.com','124546554'),
+('Soumya','soumya@gmail.com','6554435455')
+
+;
+
+
+SELECT *
+FROM STUDENT
+ORDER BY NAME DESC
+;
+
+SELECT *
+FROM INSTRUCTOR
+;
+
+SELECT *
+FROM COURSE
+;
+
+SELECT *
+FROM ENROLLMENT
+;
+
+
+INSERT INTO ENROLLMENT(STUDENTID,COURSEID,ENROLLMENTDATE)
+VALUES
+(2,1,'2024-05-12'),
+(3,2,'2024-05-15'),
+(4,5,'2024-05-18'),
+(5,3,'2024-05-20')
+;
+
+-- 2
+INSERT INTO ENROLLMENT(STUDENTID,COURSEID,ENROLLMENTDATE)
+VALUES
+(1,4,'2024-05-22')
+; 
+
+SELECT *
+FROM ENROLLMENT
+;
+
+-- 3
+SELECT *
+FROM INSTRUCTOR
+;
+
+SELECT *
+FROM COURSE
+;
+
+
+INSERT INTO INSTRUCTOR(NAME,EMAIL,PHONE,DEPARTMENT)
+VALUES
+('Nahid Islam','nahid@gmail.com','66568789','CSE')
+;
+
+UPDATE COURSE
+SET INSTRUCTORID = 6
+WHERE COURSEID = 4
+;
+
+
+
+-- 4
+INSERT INTO COURSE(TITLE,CREDITS,INSTRUCTORID)
+VALUES
+('CSE313','2','1'),
+('CSE314','1','2'),
+('CSE315','2','4'),
+('CSE316','3','3'),
+('CSE317','3','4'),
+('CSE318','2','6'),
+('CSE410','2','2'),
+('CSE412','3','6'),
+('CSE413','2','3'),
+('CSE415','2','3'),
+('CSE416','1','6'),
+('CSE417','2','4'),
+('CSE418','3','1'),
+('CSE218','2','3'),
+('CSE115','3','4')
+;
+
+SELECT *
+FROM COURSE
+;
+
+
+WITH T1 AS(
+	SELECT INSTRUCTORID AS INS_ID,SUM(CREDITS) AS CREDITS_IN_TOTAL
+	FROM COURSE
+	GROUP BY INSTRUCTORID
+	ORDER BY CREDITS_IN_TOTAL DESC
+	LIMIT 1
+)
+
+SELECT *
+FROM INSTRUCTOR I
+JOIN T1 
+ON I.INSTRUCTORID = T1.INS_ID 
+
+;
+
+SELECT *
+FROM COURSE
+;
+
+
+
+-- 5
+SELECT *
+FROM ENROLLMENT
+;
+
+SELECT *
+FROM COURSE
+;
+
+SELECT *
+FROM STUDENT
+;
+
+INSERT INTO ENROLLMENT(STUDENTID,COURSEID,ENROLLMENTDATE)
+VALUES
+(3,6,'2024-06-13'),
+(4,8,'2024-06-13'),
+(3,10,'2024-06-13'),
+(4,6,'2024-06-13'),
+(1,8,'2024-06-13'),
+(5,15,'2024-06-13'),
+(3,18,'2024-06-13'),
+(3,2,'2024-06-13'),
+(4,6,'2024-06-13'),
+(3,3,'2024-06-13'),
+(3,6,'2024-06-13'),
+(3,11,'2024-06-13'),
+(4,7,'2024-06-13'),
+(3,6,'2024-06-13'),
+(4,9,'2024-06-13')
+
+;
+
+SELECT STUDENT.STUDENTID,STUDENT.NAME, COUNT(*) AS ENROLLED_COURSES
+FROM STUDENT
+JOIN ENROLLMENT
+ON STUDENT.STUDENTID = ENROLLMENT.STUDENTID
+GROUP BY STUDENT.STUDENTID
+HAVING COUNT(*) > 2
+;
+
+
+
+
+SELECT COUNT(*)
+FROM ENROLLMENT
+GROUP BY STUDENTID
+;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
