@@ -46,11 +46,11 @@ int main()
                 continue;
             }
 
-            if (isupper(s[i])) // also not B
+            if (isupper(s[i])) // B and b checked and used continue
             {
                 cap.push(i);
             }
-            else if (islower(s[i])) // also not b
+            else if (islower(s[i]))
             {
                 small.push(i);
             }

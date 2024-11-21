@@ -2,7 +2,7 @@
 using namespace std;
 #define nl "\n"
 
-//
+// https://codeforces.com/problemset/problem/1722/C
 
 int main()
 {

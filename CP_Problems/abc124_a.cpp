@@ -3,6 +3,8 @@ using namespace std;
 #define nl "\n"
 #define ll long long int
 
+// https://atcoder.jp/contests/abc124/tasks/abc124_a
+
 void solve()
 {
     int a, b;
