@@ -18,28 +18,29 @@ class Admin(User):
     def __repr__(self):
         return f"This is Admin : {self.name}. How Can I Help You?"
 
-    def add_menu(self,food):
-        Restaurant.add_food_items_to_menu(food)
+    def add_item(self,food,restaurant_object):
+        restaurant_object.add_food_items_to_menu(food)
     
-    def remove_menu(self):
-        pass
+    def remove_item(self,item_name,restaurant_object):
+        restaurant_object.remove_item(item_name)
+        
+    def update_food_price(self,restaurant_object,item_name,new_price):
+        restaurant_object.update_price(item_name,new_price)
+        
     
-    def add_new_customer(self):
-        pass
+    def add_new_customer(self,customer_object,restaurant_object):
+        restaurant_object.add_customers_to_the_system(customer_object)
     
-    def view_all_customers(self):
-        pass
+    def view_all_customers(self,restaurant_object):
+        restaurant_object.view_saved_customers()
     
-    def remove_customer(self):
-        pass
+    def remove_customer(self,customer_name,restaurant_object):
+        restaurant_object.remove_customer_from_the_system(customer_name)
     
-    def view_menu(self):
-        pass
+    def view_menu(self,restaurant_object):
+        restaurant_object.show_menu()
     
-    def modify_menu(self):
-        pass
-        # TODO: add/remove items
-        # TODO: update price
+    
     
     
     
@@ -197,6 +198,7 @@ class Restaurant:
         
     def add_customers_to_the_system(self,customer_object):
         self.saved_customers.append(customer_object)
+        print(f"Customer : {customer_object.name} Added to the system.")
         
     def find_customer_in_the_system(self,customer_name):
         for customer in self.saved_customers:
@@ -226,7 +228,7 @@ class Restaurant:
     
     def add_food_items_to_menu(self,item):
         self.menu.append(item)
-        print(f"Food : {item.name} Added To The Menu Successfully.")
+        # print(f"Food : {item.name} Added To The Menu Successfully.")
         
     def show_menu(self):
         print()
@@ -262,6 +264,17 @@ class Restaurant:
         else:
             self.menu.remove(item)
             print(f"Food : {item_name} Removed from Menu.")
+            
+    def update_price(self,item_name,new_price):
+        item = self.find_food_item(item_name)
+        if item is None:
+            print("Invalid Food Item. I can't Update it\'s Price")
+        else:
+            old_price = item.price
+            item.price = new_price
+            print(f'Price Updated for {item.name}. Old Price was {old_price}. New Price is : {item.price}.')
+            
+            
         
         
         
@@ -380,10 +393,36 @@ mithai.add_food_items_to_menu(mojo)
 
 adm1 = Admin('Moshiur ADM','mosh_adm@gmail.com','Dhamrai')
 
-item_name = input('Enter Item Name : ')
-price = int(input('Enter Price : '))
-qty = int(input('Enter Quantity : '))
-typ = input('Enter Type (food/drinks) : ')
+# item_name = input('Enter Item Name : ')
+# price = int(input('Enter Price : '))
+# qty = int(input('Enter Quantity : '))
+# typ = input('Enter Type (food/drinks) : ')
 
-food_obj = Food(item_name,price,qty,typ)
-adm1.add_menu(food_obj)
+# food_obj = Food(item_name,price,qty,typ)
+# adm1.add_item(food_obj,mithai)
+
+
+# mithai.show_menu()
+
+
+# cust_name = input('Enter customer name : ')
+# cust_email = input('Enter customer email : ')
+# cust_address = input('Enter customer address : ')
+
+# customer_obj = Customer(cust_name,cust_email,cust_address)
+# adm1.add_new_customer(customer_obj,mithai)
+# adm1.view_all_customers(mithai)
+
+# name = input('Enter name to remove : ')
+# adm1.remove_customer(name,mithai)
+# adm1.view_all_customers(mithai)
+# mithai.view_saved_customers()
+
+# adm1.view_menu(mithai)
+# adm1.update_food_price(mithai,'burger',40)
+# adm1.view_menu(mithai)
+# mithai.show_menu()
+
+
+
+
