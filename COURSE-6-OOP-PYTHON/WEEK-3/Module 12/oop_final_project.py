@@ -17,6 +17,16 @@ class Admin(User):
         
     def __repr__(self):
         return f"This is Admin : {self.name}. How Can I Help You?"
+    
+    def enlist_to_the_system(self,restaurant_object):
+        restaurant_object.add_admins_to_the_system(self)
+        
+    def show_admin_profile(self):
+        print()
+        print('Showing ADMIN Profile')
+        print()
+        print(f"{self.name}   {self.email}  {self.address}")
+        
 
     def add_item(self,food,restaurant_object):
         restaurant_object.add_food_items_to_menu(food)
@@ -66,7 +76,7 @@ class Order:
         total = 0
         for key, value in self.items.items():
             total += value*key.price
-        print(f'You have to pay : {total} tk')
+        # print(f'You have to pay : {total} tk')
         return total
         
     def find_item_in_ordered_dictionary(self,item_name):
@@ -102,6 +112,9 @@ class Customer(User):
         self.cart = Order()
         self.past_orders = []
         
+    def request_to_be_enlisted_to_the_system(self,restaurant_object):
+        restaurant_object.add_customers_to_the_system(self)
+        
         
     def show_customer_profile(self):
         print()
@@ -119,19 +132,29 @@ class Customer(User):
             else:
                 self.cart.add_item(main_item,wanted_quantity)
         else:
-            print('Item Not Found')
+            print('Invalid Item !!')
             
             
     def view_cart(self):
-        print(f"Name\t Price\t Qty\t Sub-total")
-        for k,v in self.cart.items.items():
-            subtotal = v*k.price
-            print(f"{k.name}\t {k.price}\t {v}\t {subtotal}")
-    
+        if len(self.cart.items) == 0:
+            print()
+            print('No Items Could be Added. Cart is Empty.')
+            print()
+        else:
+            print()
+            print('ORDER SUMMARY')
+            print()
+            print(f"Name\t Price\t Qty\t Sub-total")
+            print('------------------------------------------')
+            for k,v in self.cart.items.items():
+                subtotal = v*k.price
+                print(f"{k.name}\t {k.price}\t {v}\t {subtotal}")
+            print()
             
     def checkout(self):
-        self.check_balance()
-        self.cart.calculate_total_price()
+        # self.check_balance()
+        calculated_total_price = self.cart.calculate_total_price()
+        return calculated_total_price
       
 
     def __repr__(self):
@@ -141,6 +164,7 @@ class Customer(User):
     def add_fund(self,amount):
         if amount>0:
             self.__balance += amount
+            print()
             print(f'{amount} tk added to wallet.')
             print()
         else:
@@ -148,7 +172,7 @@ class Customer(User):
             
     
     def check_balance(self):
-        print(f"Current Balance is : {self.__balance} tk")
+        # print(f"Current Balance is : {self.__balance} tk")
         return self.__balance
     
     
@@ -171,9 +195,10 @@ class Customer(User):
         current_balance = self.check_balance()
         if total_bill_amount > current_balance:
             print(f'Insufficient Money. Shortage : {total_bill_amount-current_balance} tk. Add Fund.')
-        else:
+        elif current_balance > total_bill_amount:
             self.__balance -= total_bill_amount
             print(f"Total Bill : {total_bill_amount} tk PAID SUCCESSFULLY.")
+            print(f"Current Balance : {self.check_balance()} tk.")
             self.save_past_orders()
             self.cart.clear()
             
@@ -199,14 +224,23 @@ class Customer(User):
 
 
 class Restaurant:
+    
     def __init__(self,name):
         self.name= name
         self.menu = []
         self.saved_customers = []
+        self.admins = []
+    
+    
         
+    
     def add_customers_to_the_system(self,customer_object):
         self.saved_customers.append(customer_object)
         print(f"Customer : {customer_object.name} Added to the system.")
+        
+    def add_admins_to_the_system(self,admin_object):
+        self.admins.append(admin_object)
+        print(f"ADMIN : {admin_object.name} Added to the system.")
         
     def find_customer_in_the_system(self,customer_name):
         for customer in self.saved_customers:
@@ -315,201 +349,67 @@ class Food:
 
 # -------------------------------- main ----------------------------------- 
     
-    
-    
-# mithai = Restaurant('Mithai')
-    
-    
-# pizza = Food('Pizza',200,20,'food')
-# burger = Food('Burger',30,60,'food')
-# singara = Food('Singara',15,60,'food')
-# somucha = Food('Somucha',20,40,'food')
-
-# borhani = Food('Borhani',45,35,'drinks')
-# malai_tea = Food('Malai T',60,40,'drinks')
-# mojo = Food('Mojo',20,40,'drinks')
-
-
-# # adding food items to menu
-# mithai.add_food_items_to_menu(pizza)
-# mithai.add_food_items_to_menu(burger)
-# mithai.add_food_items_to_menu(singara)
-# mithai.add_food_items_to_menu(somucha)
-# mithai.add_food_items_to_menu(borhani)
-# mithai.add_food_items_to_menu(malai_tea)
-# mithai.add_food_items_to_menu(mojo)
-
-# mithai.show_menu()
-
-# mithai.remove_item('burger')
-# mithai.show_menu()
 
 
 
 
-
-
-
-# rahim = Customer('Rahim Uddin','rahim@gmail.com','Khulna')
-# print(rahim)
-# karim = Customer('Karim Khan','karim@gmail.com','Rajbari')
-# rahim.checkout()
-
-# mithai.add_customers_to_the_system(rahim)
-# mithai.add_customers_to_the_system(karim)
-
-# mithai.view_saved_customers()
-# mithai.remove_customer_from_the_system('rahiM uddiN')
-# mithai.view_saved_customers()
-
-
-# rahim.add_fund(-40)
-# rahim.check_balance()
-# rahim.add_fund(5600)
-# rahim.check_balance()
-
-
-# print(f"Current Status of singara. Qty : {singara.quantity}")
-
-
-# rahim.view_menu(mithai)
-
-# rahim.check_balance()
-
-
-# rahim.add_to_cart(mithai,'siNgara',6)
-# rahim.add_to_cart(mithai,'singara',7)
-# # rahim.cart.remove_item('singara')
-# rahim.add_to_cart(mithai,'mojo',2)
-
-
-# rahim.view_cart()
-# rahim.add_fund(1600)
-
-# rahim.checkout()
-# rahim.pay_bill()
-# rahim.pay_bill()
-# rahim.check_balance()
-
-
-# mithai.check_customer_details('Rahim Uddin')
-
-
-# rahim.add_to_cart(mithai,'pizza',4)
-# rahim.view_cart()
-# rahim.checkout()
-# rahim.pay_bill()
-# rahim.check_balance()
-
-# rahim.show_past_orders()
-
-# rahim.checkout()
-# rahim.pay_bill()
-
-
-
-
-
-# ----------------- Admin functionalities chech ----------------
-
-adm1 = Admin('Moshiur ADM','mosh_adm@gmail.com','Dhamrai')
-
-# item_name = input('Enter Item Name : ')
-# price = int(input('Enter Price : '))
-# qty = int(input('Enter Quantity : '))
-# typ = input('Enter Type (food/drinks) : ')
-
-# food_obj = Food(item_name,price,qty,typ)
-# adm1.add_item(food_obj,mithai)
-
-
-# mithai.show_menu()
-
-
-# cust_name = input('Enter customer name : ')
-# cust_email = input('Enter customer email : ')
-# cust_address = input('Enter customer address : ')
-
-# customer_obj = Customer(cust_name,cust_email,cust_address)
-# adm1.add_new_customer(customer_obj,mithai)
-# adm1.view_all_customers(mithai)
-
-# name = input('Enter name to remove : ')
-# adm1.remove_customer(name,mithai)
-# adm1.view_all_customers(mithai)
-# mithai.view_saved_customers()
-
-# adm1.view_menu(mithai)
-# adm1.update_food_price(mithai,'burger',40)
-# adm1.view_menu(mithai)
-# mithai.show_menu()
-
-
-
-
-# ------------ final touch --------------------
-
-mama_hotel = Restaurant('Mamar Hotel')
-
-
-def restaurant_menus():
-    while True:
+def admin_menus():
+    print('You are going to be an ADMIN.')
+    name = input('Enter your name : ')
+    email = input('Enter your email : ')
+    address = input('Enter your address : ')
         
-        print('Lets create a new Restaurant')
-        print('1. Add Food Item')
-        print('2. Remove Food Item')
-        print('3. Show Menu')
-        print('4. View Customer List')
-        print('5. View Customer Details')
-        print('6. Exit')
+    admin = Admin(name,email,address)
+    admin.enlist_to_the_system(mama_hotel)
+    
+    while True:
+        print()
+        print(f"Welcome \"ADMIN: {admin.name}\" to {mama_hotel.name}!!!")
+        
+        print('1. ')
+        print('2. ')
+        print('3. ')
+        print('4. ')
+        print('5. ')
+        print('6. ')
+        print('7. ')
+        print('8. Exit')
         
         choice = int(input('Enter Your Choice : '))
+        print()
+        
         if choice == 1:
             pass
+        
         elif choice == 2:
             pass
-        
+            
         elif choice == 3:
             pass
         
         elif choice == 4:
             pass
-        
+
         elif choice == 5:
             pass
         
-        elif choice == 6:
+        elif choice == 6:            
+            pass
+            
+        
+        elif choice == 7:
+            pass        
+        
+        elif choice == 8:
             break
+        
         else:
-            print('Invalid Choice. Try Again (R)')
-
-
-def Admin_menus():
-    while True:
-        name = input('Enter your name : ')
-        email = input('Enter your email : ')
-        address = input('Enter your address : ')
+            print('Invalid Choice. Try Again Dear Customer.')
+    
+    
         
         
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        
 
 
 
@@ -521,45 +421,58 @@ def customer_menus():
     name = input('Enter Your Name : ')
     email = input('Enter Your Email : ')
     address = input('Enter Your Address : ')
-    customer = Customer(name=name, email=email, address=address)
     
-    # mama_hotel.add_customers_to_the_system(customer)
+    customer = Customer(name=name, email=email, address=address)
+    customer.request_to_be_enlisted_to_the_system(mama_hotel)
+    
     
     while True:
         print()
-        print(f'Welcome {customer.name} to {mama_hotel.name}!!')
+        print(f'Welcome \"{customer.name}\" to {mama_hotel.name}!!')
         print('1. View Menu')
         print('2. Check Available Balance')
         print('3. Add Funds')
         print('4. Place An Order')
-        print('5. View Past Orders')
-        print('6. Exit')
+        print('5. View Cart and Checkout')
+        print('6. Pay Bill')
+        print('7. View Past Orders')
+        print('8. Exit')
         
         choice = int(input('Enter Your Choice : '))
+        print()
+        
         if choice == 1:
             customer.view_menu(mama_hotel)
         
         elif choice == 2:
-            customer.check_balance()
+            current_balance = customer.check_balance()
+            print(f"Current Balance : {current_balance} tk.")
             
-        
         elif choice == 3:
             amount = int(input('Enter amount : '))
             customer.add_fund(amount)
         
         elif choice == 4:
             print('Customer going to Place An Order...')
+
             item_name = input("Enter Item Name : ")
             item_qty = int(input('Enter Quantity : '))
             customer.add_to_cart(mama_hotel,item_name,item_qty)
-            customer.view_cart()
-            customer.checkout()
-            customer.pay_bill()
-        
+
         elif choice == 5:
+            customer.view_cart()
+            total_bill = customer.checkout()
+
+            print(f'{total_bill} tk bill hoise.')
+        
+        elif choice == 6:            
+            customer.pay_bill()
+            
+        
+        elif choice == 7:
             customer.show_past_orders()        
         
-        elif choice == 6:
+        elif choice == 8:
             break
         
         else:
@@ -567,4 +480,59 @@ def customer_menus():
             
             
             
-customer_menus()
+# customer_menus()
+
+
+# rahim = Customer('Rahim Pathan','rahim_pathan@gmail.com','Lalmonirhat')
+# rahim.request_to_be_enlisted_to_the_system(mama_hotel)
+# mama_hotel.view_saved_customers()
+
+
+mama_hotel = Restaurant('Mamar Hotel')
+
+pizza = Food('Pizza',200,20,'food')
+burger = Food('Burger',30,60,'food')
+singara = Food('Singara',15,60,'food')
+somucha = Food('Somucha',20,40,'food')
+
+borhani = Food('Borhani',45,35,'drinks')
+malai_tea = Food('Malai T',60,40,'drinks')
+mojo = Food('Mojo',20,40,'drinks')
+
+
+# adding food items to menu
+mama_hotel.add_food_items_to_menu(pizza)
+mama_hotel.add_food_items_to_menu(burger)
+mama_hotel.add_food_items_to_menu(singara)
+mama_hotel.add_food_items_to_menu(somucha)
+mama_hotel.add_food_items_to_menu(borhani)
+mama_hotel.add_food_items_to_menu(malai_tea)
+mama_hotel.add_food_items_to_menu(mojo)
+
+
+while True:
+    
+    print('Welcome!!')
+    print('1. Admin')
+    print('2. Customer')
+    print('3. Restaurant')
+    print('4. Exit')
+    
+    print()
+    choice = int(input('ENTER YOUR CHOICE : '))
+    
+    if choice == 1:
+        admin_menus()
+        
+    elif choice == 2:
+        customer_menus()
+    elif choice == 3:
+        pass
+        # TODO: Call Restaurant menu()
+    elif choice == 4:
+        break
+    else:
+        print()
+        print("INVALID CHOICE. TRY AGAIN. ")
+        print()     
+    
