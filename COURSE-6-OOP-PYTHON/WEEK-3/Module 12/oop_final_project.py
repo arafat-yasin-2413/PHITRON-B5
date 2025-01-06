@@ -257,8 +257,7 @@ class Restaurant:
             self.saved_customers.remove(customer)
             print(f"Customer : {customer_name.upper()} Removed from the Restaurant Database.")
         
-        
-        
+   
     def view_saved_customers(self):
         # print(self.saved_customers)
         print()
@@ -279,27 +278,58 @@ class Restaurant:
     
     def add_food_items_to_menu(self,item):
         self.menu.append(item)
-        # print(f"Food : {item.name} Added To The Menu Successfully.")
+        print(f"Food : {item.name} Added To The Menu Successfully.")
+        # print()
         
     def show_menu(self):
-        print()
-        print('------------------------------')
-        print('\tShowing Menu')
-        print('------------------------------')
-        print('Food Items:')
-        
-        print('Name\tPrice\tQuantity')
-        for food in self.menu:
-            if food.type.lower() == 'food':
-                print(f"{food.name}\t{food.price}\t{food.quantity}")
-        print()
-        
-        print('Drink Items:')
-        print('Name\tPrice\tQuantity')
-        for food in self.menu:
-            if food.type.lower() == 'drinks':
-                print(f"{food.name}\t{food.price}\t{food.quantity}")
-        print()
+        if len(self.menu) == 0:
+            print()
+            print('Menu is Empty. No Food Available. Add Foods as ADMIN.')
+            print()
+        else:
+            
+            print()
+            print('------------------------------')
+            print('\tShowing Menu')
+            print('------------------------------')
+            
+            food_available = False
+            
+            for food in self.menu:
+                if food.type.lower() == 'food':
+                    food_available = True
+            
+            if food_available:
+                print('Food Items:')
+            
+                print('Name\tPrice\tQuantity')
+                for food in self.menu:
+                    if food.type.lower() == 'food':
+                        print(f"{food.name}\t{food.price}\t{food.quantity}")
+                print()
+            else:
+                print()
+                print('NO FOOD ITEM AVAILABLE.')
+                print()
+                
+                
+            drinks_available = False
+            
+            for food in self.menu:
+                if food.type.lower() == 'drinks':
+                    drinks_available = True
+            
+            if drinks_available:
+                print('Drink Items:')
+                print('Name\tPrice\tQuantity')
+                for food in self.menu:
+                    if food.type.lower() == 'drinks':
+                        print(f"{food.name}\t{food.price}\t{food.quantity}")
+                print()
+            else:
+                print()
+                print('NO DRINKS ITEM AVAILABLE')
+                print()
         
         
     def find_food_item(self,item_name):
@@ -366,26 +396,35 @@ def admin_menus():
         print()
         print(f"Welcome \"ADMIN: {admin.name}\" to {mama_hotel.name}!!!")
         
-        print('1. ')
-        print('2. ')
-        print('3. ')
-        print('4. ')
-        print('5. ')
-        print('6. ')
-        print('7. ')
-        print('8. Exit')
+        print('1. Add Food Item')
+        print('2. Remove Food Item')
+        print('3. View Menu')
+        print('4. View Registered Customers')
+        print('5. Add A New Customer')
+        print('6. Remove A Customer')
+        print('7. Modify Menu')
+        print('8. Show ADMIN Profile')
+        print('9. Exit')
         
         choice = int(input('Enter Your Choice : '))
         print()
         
         if choice == 1:
-            pass
+            print('Admin going to add new food item...')
+            item_name = input('Enter Food Item\'s Name : ')
+            price = int(input('Enter Price : '))
+            qty = int(input('Enter Quantity : '))
+            typ = input('Enter Food Type (food/drinks) : ')
+            
+            food_object = Food(name=item_name,price=price,quantity=qty,type=typ)
+            admin.add_item(food_object,mama_hotel)
+            print()
         
         elif choice == 2:
             pass
             
         elif choice == 3:
-            pass
+            admin.view_menu(mama_hotel)
         
         elif choice == 4:
             pass
@@ -401,6 +440,9 @@ def admin_menus():
             pass        
         
         elif choice == 8:
+            pass
+        
+        elif choice == 9:
             break
         
         else:
@@ -490,28 +532,28 @@ def customer_menus():
 
 mama_hotel = Restaurant('Mamar Hotel')
 
-pizza = Food('Pizza',200,20,'food')
-burger = Food('Burger',30,60,'food')
-singara = Food('Singara',15,60,'food')
-somucha = Food('Somucha',20,40,'food')
+# pizza = Food('Pizza',200,20,'food')
+# burger = Food('Burger',30,60,'food')
+# singara = Food('Singara',15,60,'food')
+# somucha = Food('Somucha',20,40,'food')
 
-borhani = Food('Borhani',45,35,'drinks')
-malai_tea = Food('Malai T',60,40,'drinks')
-mojo = Food('Mojo',20,40,'drinks')
+# borhani = Food('Borhani',45,35,'drinks')
+# malai_tea = Food('Malai T',60,40,'drinks')
+# mojo = Food('Mojo',20,40,'drinks')
 
 
-# adding food items to menu
-mama_hotel.add_food_items_to_menu(pizza)
-mama_hotel.add_food_items_to_menu(burger)
-mama_hotel.add_food_items_to_menu(singara)
-mama_hotel.add_food_items_to_menu(somucha)
-mama_hotel.add_food_items_to_menu(borhani)
-mama_hotel.add_food_items_to_menu(malai_tea)
-mama_hotel.add_food_items_to_menu(mojo)
+# # adding food items to menu
+# mama_hotel.add_food_items_to_menu(pizza)
+# mama_hotel.add_food_items_to_menu(burger)
+# mama_hotel.add_food_items_to_menu(singara)
+# mama_hotel.add_food_items_to_menu(somucha)
+# mama_hotel.add_food_items_to_menu(borhani)
+# mama_hotel.add_food_items_to_menu(malai_tea)
+# mama_hotel.add_food_items_to_menu(mojo)
 
 
 while True:
-    
+    print()
     print('Welcome!!')
     print('1. Admin')
     print('2. Customer')
