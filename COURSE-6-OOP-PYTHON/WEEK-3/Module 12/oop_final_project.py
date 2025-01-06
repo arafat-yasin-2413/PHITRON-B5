@@ -34,8 +34,14 @@ class Admin(User):
     def remove_item(self,item_name,restaurant_object):
         restaurant_object.remove_item(item_name)
         
+    def update_food_name(self,restaurant_object,item_name,new_name):
+        restaurant_object.update_item_name(item_name,new_name)
+        
     def update_food_price(self,restaurant_object,item_name,new_price):
         restaurant_object.update_price(item_name,new_price)
+        
+    def update_food_quantity(self,restaurant_object,item_name,new_quantity):
+        restaurant_object.update_item_quantity(item_name,new_quantity)
         
     
     def add_new_customer(self,customer_object,restaurant_object):
@@ -260,13 +266,18 @@ class Restaurant:
    
     def view_saved_customers(self):
         # print(self.saved_customers)
-        print()
-        print('Customer Details')
-        print()
+        if len(self.saved_customers) == 0:
+            print()
+            print(f'Number of Customer = {len(self.saved_customers)}. Add New Customer by Admin.')
+            print()
+        else:    
+            print()
+            print('List of Customers')
+            print()
+            
+            for customer in self.saved_customers:
+                print(f"Customer Name : {customer.name}, Email : {customer.email}, Address : {customer.address} ")
         
-        for customer in self.saved_customers:
-            print(f"Customer Name : {customer.name}, Email : {customer.email}, Address : {customer.address} ")
-    
     
     def check_customer_details(self,customer_name):
         customer_object = self.find_customer_in_the_system(customer_name)
@@ -302,10 +313,10 @@ class Restaurant:
             if food_available:
                 print('Food Items:')
             
-                print('Name\tPrice\tQuantity')
+                print('Name\t Price\t Quantity')
                 for food in self.menu:
                     if food.type.lower() == 'food':
-                        print(f"{food.name}\t{food.price}\t{food.quantity}")
+                        print(f"{food.name}\t {food.price}\t {food.quantity}")
                 print()
             else:
                 print()
@@ -324,7 +335,7 @@ class Restaurant:
                 print('Name\tPrice\tQuantity')
                 for food in self.menu:
                     if food.type.lower() == 'drinks':
-                        print(f"{food.name}\t{food.price}\t{food.quantity}")
+                        print(f"{food.name}\t {food.price}\t {food.quantity}")
                 print()
             else:
                 print()
@@ -346,6 +357,15 @@ class Restaurant:
             self.menu.remove(item)
             print(f"Food : {item_name} Removed from Menu.")
             
+    def update_item_name(self,item_name,new_name):
+        item = self.find_food_item(item_name)
+        if item is None:
+            print("Invalid Food Item. I can't Update it\'s Name")
+        else:
+            old_name = item.name
+            item.name = new_name
+            print(f'Name Updated to {item.name}. Old Name was {old_name}.')
+            
     def update_price(self,item_name,new_price):
         item = self.find_food_item(item_name)
         if item is None:
@@ -354,6 +374,17 @@ class Restaurant:
             old_price = item.price
             item.price = new_price
             print(f'Price Updated for {item.name}. Old Price was {old_price}. New Price is : {item.price}.')
+            
+    def update_item_quantity(self,item_name,new_quantity):
+        item = self.find_food_item(item_name)
+        if item is None:
+            print("Invalid Food Item. I can't Update it\'s Quantity")
+        else:
+            old_quantity = item.quantity
+            item.quantity = new_quantity
+            print(f'Quantity Updated for {item.name}. Old Quantity was {old_quantity}. New Quantity : {item.quantity}.')
+            
+    
             
             
         
@@ -383,25 +414,28 @@ class Food:
 
 
 
-def admin_menus():
-    print('You are going to be an ADMIN.')
-    name = input('Enter your name : ')
-    email = input('Enter your email : ')
-    address = input('Enter your address : ')
+def admin_menus(admin_name):
+    print('-------------- ADMIN MENU ----------------')
+
+    name = admin_name
+    email = 'admin@gmail.com'
+    address = 'DHAKA'
         
     admin = Admin(name,email,address)
     admin.enlist_to_the_system(mama_hotel)
+    print('Admin Logged In Successfully...')
+    print()
     
     while True:
         print()
         print(f"Welcome \"ADMIN: {admin.name}\" to {mama_hotel.name}!!!")
         
-        print('1. Add Food Item')
-        print('2. Remove Food Item')
+        print('1. Create A New Customer Account')
+        print('2. Remove A Customer Account')
         print('3. View Menu')
-        print('4. View Registered Customers')
-        print('5. Add A New Customer')
-        print('6. Remove A Customer')
+        print('4. Add Food Item')
+        print('5. Remove Food Item')
+        print('6. View Registered Customers')
         print('7. Modify Menu')
         print('8. Show ADMIN Profile')
         print('9. Exit')
@@ -410,6 +444,28 @@ def admin_menus():
         print()
         
         if choice == 1:
+            print('Admin is going to add new customer..')
+            print()
+            name = input('Enter Customer\'s Name : ')
+            email = input('Enter Customer\'s Email : ')
+            address = input('Enter Customer\'s Address : ')
+    
+            customer = Customer(name=name, email=email, address=address)
+            admin.add_new_customer(customer,mama_hotel)
+            
+            
+        
+        elif choice == 2:
+            print('Admin is going to Remove a Customer..')
+            cust_name = input('Enter Customer\'s Name : ')
+            admin.remove_customer(cust_name,mama_hotel)
+            
+            
+            
+        elif choice == 3:
+            admin.view_menu(mama_hotel)
+        
+        elif choice == 4:
             print('Admin going to add new food item...')
             item_name = input('Enter Food Item\'s Name : ')
             price = int(input('Enter Price : '))
@@ -419,28 +475,60 @@ def admin_menus():
             food_object = Food(name=item_name,price=price,quantity=qty,type=typ)
             admin.add_item(food_object,mama_hotel)
             print()
-        
-        elif choice == 2:
-            pass
             
-        elif choice == 3:
-            admin.view_menu(mama_hotel)
-        
-        elif choice == 4:
-            pass
+            
 
         elif choice == 5:
-            pass
+            print('Admin is going to Remove Food Item..')
+            food_item_name = input('Enter Food Item\'s Name : ')
+            admin.remove_item(food_item_name,mama_hotel)
         
         elif choice == 6:            
-            pass
+            admin.view_all_customers(mama_hotel)
             
         
         elif choice == 7:
-            pass        
+            print('Admin is going to modify Menu..')
+            print()
+            
+            while True:
+                print('1. Update Item Name')
+                print('2. Update Price')
+                print('3. Update Quantity')
+                print('4. Exit from Update Section')
+                
+                print()
+                opt = int(input('Enter option to update menu : '))
+                
+                if opt == 1:
+                    print('Updating Item Name..')
+                    item_name = input('Enter Item Name : ')
+                    new_name = input('Enter New Name : ')
+                    admin.update_food_name(mama_hotel,item_name,new_name)
+                    
+                elif opt == 2:
+                    print('Updating Item Price..')
+                    print('Price Must be Greater than Zero..')
+                    item_name = input('Enter Item Name : ')
+                    new_price = int(input('Enter New Price : '))
+                    admin.update_food_price(mama_hotel,item_name,new_price)
+                    
+                elif opt == 3:
+                    print('Updating Item Quantity..')
+                    print('Quantity Must be Greater than Zero..')
+                    item_name = input('Enter Item Name : ')
+                    new_quantity = int(input('Enter New Quantity : '))
+                    admin.update_food_quantity(mama_hotel,item_name,new_quantity)
+                
+                elif opt == 4:
+                    break
+                
+                else:
+                    print('Invalid Option. Try Again..')
+                
         
         elif choice == 8:
-            pass
+            admin.show_admin_profile()
         
         elif choice == 9:
             break
@@ -458,19 +546,13 @@ def admin_menus():
 
 
 
-def customer_menus():
-    print('You are going to be a customer.')
-    name = input('Enter Your Name : ')
-    email = input('Enter Your Email : ')
-    address = input('Enter Your Address : ')
-    
-    customer = Customer(name=name, email=email, address=address)
-    customer.request_to_be_enlisted_to_the_system(mama_hotel)
+def customer_menus(customer_object):
+    print(f'-------- CUSTOMER \"{customer_object.name}\"s MENU --------')
     
     
     while True:
         print()
-        print(f'Welcome \"{customer.name}\" to {mama_hotel.name}!!')
+        # print(f'Welcome \"{customer.name}\" to {mama_hotel.name}!!')
         print('1. View Menu')
         print('2. Check Available Balance')
         print('3. Add Funds')
@@ -484,35 +566,35 @@ def customer_menus():
         print()
         
         if choice == 1:
-            customer.view_menu(mama_hotel)
+            customer_object.view_menu(mama_hotel)
         
         elif choice == 2:
-            current_balance = customer.check_balance()
+            current_balance = customer_object.check_balance()
             print(f"Current Balance : {current_balance} tk.")
             
         elif choice == 3:
             amount = int(input('Enter amount : '))
-            customer.add_fund(amount)
+            customer_object.add_fund(amount)
         
         elif choice == 4:
             print('Customer going to Place An Order...')
 
             item_name = input("Enter Item Name : ")
             item_qty = int(input('Enter Quantity : '))
-            customer.add_to_cart(mama_hotel,item_name,item_qty)
+            customer_object.add_to_cart(mama_hotel,item_name,item_qty)
 
         elif choice == 5:
-            customer.view_cart()
-            total_bill = customer.checkout()
+            customer_object.view_cart()
+            total_bill = customer_object.checkout()
 
             print(f'{total_bill} tk bill hoise.')
         
         elif choice == 6:            
-            customer.pay_bill()
+            customer_object.pay_bill()
             
         
         elif choice == 7:
-            customer.show_past_orders()        
+            customer_object.show_past_orders()        
         
         elif choice == 8:
             break
@@ -522,56 +604,84 @@ def customer_menus():
             
             
             
-# customer_menus()
+        
+        
+
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+            
+            
+            
 
 
-# rahim = Customer('Rahim Pathan','rahim_pathan@gmail.com','Lalmonirhat')
-# rahim.request_to_be_enlisted_to_the_system(mama_hotel)
-# mama_hotel.view_saved_customers()
+
+
 
 
 mama_hotel = Restaurant('Mamar Hotel')
 
-# pizza = Food('Pizza',200,20,'food')
-# burger = Food('Burger',30,60,'food')
-# singara = Food('Singara',15,60,'food')
-# somucha = Food('Somucha',20,40,'food')
+pizza = Food('Pizza',200,20,'food')
+burger = Food('Burger',30,60,'food')
+singara = Food('Singara',15,60,'food')
+somucha = Food('Somucha',20,40,'food')
 
-# borhani = Food('Borhani',45,35,'drinks')
-# malai_tea = Food('Malai T',60,40,'drinks')
-# mojo = Food('Mojo',20,40,'drinks')
+borhani = Food('Borhani',45,35,'drinks')
+malai_tea = Food('Malai T',60,40,'drinks')
+mojo = Food('Mojo',20,40,'drinks')
 
 
-# # adding food items to menu
-# mama_hotel.add_food_items_to_menu(pizza)
-# mama_hotel.add_food_items_to_menu(burger)
-# mama_hotel.add_food_items_to_menu(singara)
-# mama_hotel.add_food_items_to_menu(somucha)
-# mama_hotel.add_food_items_to_menu(borhani)
-# mama_hotel.add_food_items_to_menu(malai_tea)
-# mama_hotel.add_food_items_to_menu(mojo)
+
+# adding food items to menu
+mama_hotel.add_food_items_to_menu(pizza)
+mama_hotel.add_food_items_to_menu(burger)
+mama_hotel.add_food_items_to_menu(singara)
+mama_hotel.add_food_items_to_menu(somucha)
+mama_hotel.add_food_items_to_menu(borhani)
+mama_hotel.add_food_items_to_menu(malai_tea)
+mama_hotel.add_food_items_to_menu(mojo)
 
 
 while True:
     print()
+    print('-------------- RESTAURANT MANAGEMENT SYSTEM ----------------')
     print('Welcome!!')
-    print('1. Admin')
-    print('2. Customer')
-    print('3. Restaurant')
-    print('4. Exit')
+    print('1. Admin Login')
+    print('2. Customer Login')
+    print('3. Exit')
     
     print()
     choice = int(input('ENTER YOUR CHOICE : '))
     
     if choice == 1:
-        admin_menus()
+        username = input('Enter username (Admin) : ')
+        if username == 'Admin':
+            admin_menus(username)
+        else:
+            print()
+            print('Admin Login Failed. Try Again with "Admin".. ')
         
     elif choice == 2:
-        customer_menus()
+        cust_name = input('Enter Customer Name : ')
+        customer = mama_hotel.find_customer_in_the_system(cust_name)
+        
+        if customer is None:
+            print()
+            print('Login Failed. First Add New Customer by Admin. Then Login As Customer.')
+            print()
+        elif customer is not None:
+            customer_menus(customer)
+        
     elif choice == 3:
-        pass
-        # TODO: Call Restaurant menu()
-    elif choice == 4:
         break
     else:
         print()
