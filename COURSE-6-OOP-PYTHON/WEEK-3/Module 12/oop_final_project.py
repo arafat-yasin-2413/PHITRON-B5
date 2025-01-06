@@ -1,5 +1,4 @@
 
-
 class User:
     def __init__(self,name,email,address):
         self.name = name
@@ -57,9 +56,7 @@ class Admin(User):
         restaurant_object.show_menu()
     
     
-    
-    
-    
+
 class Order:
     def __init__(self):
         self.items = {}
@@ -110,7 +107,6 @@ class Order:
         self.items = {}
         
         
-    
 class Customer(User):
     def __init__(self, name, email, address):
         super().__init__(name, email, address)
@@ -213,22 +209,6 @@ class Customer(User):
         
         
     
-        
-
-
-
-
-
-
-
-
-
-
-# ------------- Restaurant and Food Section --------------------
-
-
-
-
 class Restaurant:
     
     def __init__(self,name):
@@ -386,11 +366,6 @@ class Restaurant:
             
     
             
-            
-        
-        
-        
-        
 
 class Food:
     def __init__(self,name,price,quantity,type):
@@ -410,10 +385,6 @@ class Food:
 
 # -------------------------------- main ----------------------------------- 
     
-
-
-
-
 def admin_menus(admin_name):
     print('-------------- ADMIN MENU ----------------')
 
@@ -453,15 +424,11 @@ def admin_menus(admin_name):
             customer = Customer(name=name, email=email, address=address)
             admin.add_new_customer(customer,mama_hotel)
             
-            
-        
         elif choice == 2:
             print('Admin is going to Remove a Customer..')
             cust_name = input('Enter Customer\'s Name : ')
             admin.remove_customer(cust_name,mama_hotel)
-            
-            
-            
+              
         elif choice == 3:
             admin.view_menu(mama_hotel)
         
@@ -476,8 +443,6 @@ def admin_menus(admin_name):
             admin.add_item(food_object,mama_hotel)
             print()
             
-            
-
         elif choice == 5:
             print('Admin is going to Remove Food Item..')
             food_item_name = input('Enter Food Item\'s Name : ')
@@ -485,8 +450,7 @@ def admin_menus(admin_name):
         
         elif choice == 6:            
             admin.view_all_customers(mama_hotel)
-            
-        
+                
         elif choice == 7:
             print('Admin is going to modify Menu..')
             print()
@@ -525,8 +489,7 @@ def admin_menus(admin_name):
                 
                 else:
                     print('Invalid Option. Try Again..')
-                
-        
+                     
         elif choice == 8:
             admin.show_admin_profile()
         
@@ -535,20 +498,12 @@ def admin_menus(admin_name):
         
         else:
             print('Invalid Choice. Try Again Dear Customer.')
-    
-    
+ 
         
         
-        
-
-
-
-
-
 
 def customer_menus(customer_object):
     print(f'-------- CUSTOMER \"{customer_object.name}\"s MENU --------')
-    
     
     while True:
         print()
@@ -605,30 +560,8 @@ def customer_menus(customer_object):
             
             
         
-        
 
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-            
-            
-            
-
-
-
-
-
-
-mama_hotel = Restaurant('Mamar Hotel')
+mama_hotel = Restaurant('Mama Hotel')
 
 pizza = Food('Pizza',200,20,'food')
 burger = Food('Burger',30,60,'food')
