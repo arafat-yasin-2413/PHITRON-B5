@@ -1,0 +1,30 @@
+#show-meal-details-parent{
+
+	margin-top: 100px;
+	margin-bottom: 200px;
+
+	width: 25%;
+}
+
+.meal-section{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.single-meal-image{
+	width: 100%;
+}
+
+#no-meals-found-container{
+	display: flex;
+	justify-content: center;
+	margin-top: 100px;
+}
+
+.no-meals-found{
+	font-size: 36px;
+	font-weight: bold;
+	text-align: center;
+
+}
