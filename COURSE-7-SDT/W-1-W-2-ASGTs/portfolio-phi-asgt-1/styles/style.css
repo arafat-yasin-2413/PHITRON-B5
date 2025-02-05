@@ -1,0 +1,114 @@
+
+a{
+    text-decoration: none;
+}
+
+/* Navbar CSS Starts */
+
+.navbar-right-side{
+    /* background-color: red;    */
+    display: flex;
+    justify-content: end;
+    align-items: center;
+
+    
+}
+
+
+
+#resume-btn{
+    background-color: #0DCAF0;
+    width: 80px;
+    font-size: 14px;
+
+    border: none;
+    
+}
+
+
+
+
+/* Banner CSS Starts */
+
+.profile-name{
+    color: #00FFFF;
+    font-size: 56px;
+    font-weight: 700;
+}
+
+
+.banner-image{
+    width: 350px;
+}
+
+#resume-btn-2{
+    background-color: #0DCAF0;
+    border: none;
+}
+
+
+
+/* Project CSS Starts */
+
+.project-banner-1,.project-banner-2{
+    border: 2px solid gray;
+    padding: 15px 0px 15px 0px;
+}
+
+
+.project-banner-2{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+/* Qualification CSS Starts */
+
+
+
+/* Contact CSS Starts */
+
+.contact-form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    border: 2px solid gray;
+
+    width: 500px;
+
+    box-shadow: 5px 5px 5px gray;
+}
+
+textarea{
+    width: 300px;
+    height: 150px;
+    padding: 10px;
+
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;    
+    
+}
+
+textarea::placeholder{
+    text-align: center;
+}
+
+
+#send-btn{
+    width: 200px;
+    /* width: auto; */
+    /* max-width: 80%; */
+    /* text-align: center; */
+}
+
+/* Footer CSS Starts */
+
+.icons{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    gap:10px;
+}

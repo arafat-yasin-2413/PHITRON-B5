@@ -1,0 +1,259 @@
+*{
+    margin: 0px;
+    font-family: Inter;
+}
+
+.banner-container{
+
+    /* background-image: url('./images/banner-bg.jpg'); */
+
+    background: linear-gradient(to bottom, rgba(41, 35, 35, 0.5), rgba(17, 17, 19, 0.5) ),
+    url('./images/banner-bg.jpg') no-repeat center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+}
+
+.navbar-contents{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2%;
+
+}
+
+.banner-container ul{
+    display: flex;
+    gap: 20px;   
+}
+
+.banner-container li{
+    list-style: none;
+    color: #FB9D5C;
+
+    
+}
+
+.banner-parent{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 40px;
+}
+
+
+
+.banner-left p{
+    color: #FB9D5C;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.banner-left h2{
+    color: white;
+    font-size: 32px;
+    font-weight: 800;
+}
+
+.banner-left button{
+    background-color: #FB9D5C;
+    border: none;
+    border-radius: 4px;
+    padding: 10px;
+    margin-left: 80px;
+    margin-top: 10px;
+}
+
+.icons-container{
+    width: auto;
+    height: 206px;
+    background: rgb(246, 233, 233);
+
+    margin: 0px 50px 10px 50px;
+
+}
+
+.icons-parent{
+    display: flex;
+    justify-content: space-evenly;
+    padding-top: 50px;
+}
+
+.icons-parent img{
+    width: 130px;
+}
+
+.card-texts{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    margin-top: 20px;
+    padding: 5px 350px 5px 350px;
+
+
+}
+
+.cards{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+
+    padding: 5px;
+}
+
+.card{
+    width: 356px;
+    height: 280px;
+
+    border: 1px solid rgb(142, 132, 132);
+    border-radius: 4px;
+
+    margin: 10px 20px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    padding: 10px;
+    text-align: center;
+
+}
+
+/* .card img,h4,p{
+    margin-bottom: 20px;
+} */
+
+.hire-section{
+    display: flex;
+    padding: 0px;
+}
+
+
+.hire-contents{
+    padding: 50px;
+    text-align: justify;
+}
+
+.hire-contents h3{
+    margin: 10px 0px 10px 0px;
+}
+
+
+.hire-button{
+    background-color: #0DCAF0;
+    border: none;
+    border-radius: 4px;
+    padding: 4px;
+    margin: 5px 0px 5px 0px;
+}
+
+.special-text{
+    color: #FB9D5C;
+}
+
+.hire-description{
+    font-size: 12px;
+}
+
+.telephone-div{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+
+.telephone-div img{
+    width: 25px;
+    padding: 10px;
+}
+
+
+
+
+/* footer css starts */
+footer{
+    background-color: black;
+}
+
+.footer-container{
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    gap: 40px;
+    padding-bottom: 100px;
+    margin-bottom: 80px;
+
+    color: #C0BABA;
+}
+
+.div-1{
+    width: 300px;
+
+}
+
+
+
+.div-1 h5{
+    color: #FB9D5C;
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.div-1 p{
+    font-size: 14px;
+    text-align: justify;
+    font-size: 12px;
+}
+
+.img-and-security-manager{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap:10px
+}
+
+.img-and-security-manager img{
+    width: 40px;
+
+}
+
+
+.email-field{
+    padding: 5px;
+    border: none;
+    border: 1px solid gainsboro;
+    border-radius: 6px;
+}
+
+
+.div-5-subdiv{
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+    /* margin-bottom: 5px; */
+}
+
+.learn-more{
+    font-size: 14px;
+}
+
+
+.div-2,.div-3,.div-4 li{
+    font-size: 12px;
+}
+
+
+
+
+.div-5-subdiv p{
+    font-size: 12px;
+}
